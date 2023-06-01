@@ -1,5 +1,7 @@
 import React from "react"
-import {  register } from "../../../https"
+import { register } from "../../../https"
+import { toast } from "react-hot-toast"
+import axios from "axios"
 
 function Signup({ setAuthType }: IAuthProp) {
     const [user, setUser] = React.useState<IUserRegister>({
@@ -12,9 +14,15 @@ function Signup({ setAuthType }: IAuthProp) {
 
         try {
             const res = await register(user)
-            console.log(res);
+            if (res.status === 200) {
+                setAuthType("login")
+                return toast.success("User Register.")
+            }
 
         } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return toast.error(error.response?.data.message)
+            }
             console.log(error)
 
         }

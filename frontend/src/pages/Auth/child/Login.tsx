@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { IUser, setAuth } from "../../../redux/slice/authSlice";
+import { toast } from "react-hot-toast";
 function Login({ setAuthType }: IAuthProp) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,10 +26,11 @@ function Login({ setAuthType }: IAuthProp) {
                 dispatch(setAuth(loggedUser))
                 localStorage.setItem("token", res.data.token)
                 navigate("/home")
+                return toast.success("User logged in.")
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(error.response?.data.message);
+                return toast.error(error.response?.data.message);
             }
             console.log(error);
 
