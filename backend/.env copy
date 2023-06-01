@@ -1,0 +1,4 @@
+PORT=5000
+DB_URI=mongodb://localhost:27017/to-do
+JWT_SECRET=451djnfjdf5465dfh4545dfhjdf
+NODE_ENV=development
